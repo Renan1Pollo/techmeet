@@ -1,0 +1,26 @@
+<div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+  <div id="header" class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+    <div class="ml-4 mt-2">
+      <h3 class="text-base font-semibold leading-6 text-gray-900">Eventos de Tecnologia 🇧🇷</h3>
+    </div>
+    <div class="ml-4 mt-2 flex-shrink-0">
+      <button type="button" class="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Adicionar um evento</button>
+    </div>
+  </div>
+
+  <main id="content" class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Lista de Eventos</h2>
+        <p class="mt-2 text-lg leading-8 text-gray-600">Aqui você irá encontrar a lista de próximos eventos de tecnologia que irão rolar no Brasil!</p>
+      </div>
+      <div class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <ul class="-my-8 divide-y divide-gray-100">
+          @for (event of events; track event) {
+            <app-event [title]="event.title" [description]="event.description" [date]="event.date" [place]="event.place">{{ event }}</app-event>
+            }
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>
