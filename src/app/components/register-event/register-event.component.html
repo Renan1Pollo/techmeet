@@ -44,10 +44,10 @@
             URL da Imagem
           </label>
           <input
-            formControlName="url"
-            type="url"
-            name="url"
-            id="url"
+            formControlName="image"
+            type="text"
+            name="image"
+            id="image"
             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
@@ -60,7 +60,7 @@
           </label>
           <select
             id="stateDropdown"
-            formControlName="locale"
+            formControlName="state"
             class="w-full rounded-md border py-3 px-6 outline-none"
           >
             @for (option of states; track option.label) {
