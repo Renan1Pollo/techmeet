@@ -53,5 +53,7 @@ export class RegisterEventComponent implements OnInit {
     });
   }
 
-  submit() {}
+  submit() {
+    console.log(this.eventForm)
+  }
 }
