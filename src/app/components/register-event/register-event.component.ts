@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { FilterService } from '../../services/filter.service';
 import { UF } from '../../types/UF.type';
+import { Router } from '@angular/router';
 
 interface EventForm {
   name: FormControl<string | null>;
@@ -27,7 +28,7 @@ export class RegisterEventComponent implements OnInit {
   eventForm!: FormGroup;
   states: { id: number; label: string; value: string }[] = [];
 
-  constructor(private filterService: FilterService) {}
+  constructor(private filterService: FilterService, private router: Router) {}
 
   ngOnInit() {
     this.eventForm = new FormGroup<EventForm>({
@@ -55,5 +56,14 @@ export class RegisterEventComponent implements OnInit {
 
   submit() {
     console.log(this.eventForm)
+    if (this.eventForm.invalid) {
+      return;
+    }
+
+    this.router.navigate(['/home']);
+  }
+
+  goBack() {
+    this.router.navigate(['/home']);
   }
 }

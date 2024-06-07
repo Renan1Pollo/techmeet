@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface RegisterForm {
   name: FormControl<string | null>;
@@ -18,6 +19,8 @@ interface RegisterForm {
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
     this.registerForm = new FormGroup<RegisterForm>({
       name: new FormControl<string | null>(null, [Validators.required]),
@@ -29,5 +32,6 @@ export class RegisterComponent implements OnInit {
 
   submit() {
     console.log(this.registerForm);
+    this.router.navigate(['/home']);
   }
 }
