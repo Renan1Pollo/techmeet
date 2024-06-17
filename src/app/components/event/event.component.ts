@@ -12,4 +12,5 @@ export class EventComponent {
   @Input('description') description: string = 'descrição virá em breve! hehe';
   @Input('date') date: string = '19/10/2024';
   @Input('place') place: string = 'Online';
+  isUser: boolean = true
 }
