@@ -6,6 +6,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { FilterService } from '../../services/filter.service';
 import { UF } from '../../types/UF.type';
+import { EventService } from '../../services/event.service';
+import { Event } from '../../types/Event.type';
 
 interface FilterForm {
   locale: FormControl;
@@ -29,29 +31,9 @@ export class HomeComponent {
   filterForm!: FormGroup<FilterForm>;
   isModalOpen = signal(false);
   states: { label: string; value: string }[] = [];
+  events!: Event[];
 
-  events = [
-    {
-      title: 'Frontin Sampa',
-      place: 'São Paulo',
-      date: '19/10/2024',
-      description: 'Maior evento de Frontend do Brasil!',
-    },
-    {
-      title: 'Campus Party',
-      place: 'São Paulo',
-      date: '26/07/2024',
-      description: 'Maior evento de de Tecnologia do Brasil!',
-    },
-    {
-      title: 'Campus Party',
-      place: 'São Paulo',
-      date: '26/07/2024',
-      description: 'Maior evento de de Tecnologia do Brasil!',
-    },
-  ];
-
-  constructor(private router: Router, private filterService: FilterService) {
+  constructor(private service: EventService, private router: Router, private filterService: FilterService) {
     this.filterForm = new FormGroup({
       locale: new FormControl(''),
       from: new FormControl(null),
@@ -76,11 +58,19 @@ export class HomeComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.getEventData();
+  }
+
+  getEventData(): void {
+    this.events = [];
+    this.service.getData().subscribe((data: Event[]) => {
+      this.events = data;
+    });
+  }
+
   submit() {
     this.isModalOpen.set(false);
-    console.log(this.filterForm.value.from);
-    console.log(this.filterForm.value.to);
-    console.log(this.filterForm.value.locale);
   }
 
   addEvent() {

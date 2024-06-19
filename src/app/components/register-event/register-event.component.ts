@@ -8,6 +8,9 @@ import {
 import { FilterService } from '../../services/filter.service';
 import { UF } from '../../types/UF.type';
 import { Router } from '@angular/router';
+import { EventService } from '../../services/event.service';
+import { Event } from '../../types/Event.type';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface EventForm {
   name: FormControl<string | null>;
@@ -28,7 +31,7 @@ export class RegisterEventComponent implements OnInit {
   eventForm!: FormGroup;
   states: { id: number; label: string; value: string }[] = [];
 
-  constructor(private filterService: FilterService, private router: Router) {}
+  constructor(private filterService: FilterService, private eventService: EventService, private router: Router) {}
 
   ngOnInit() {
     this.eventForm = new FormGroup<EventForm>({
@@ -54,13 +57,31 @@ export class RegisterEventComponent implements OnInit {
     });
   }
 
+  getEventData(): Event {
+    return {
+      name: this.eventForm.value.name,
+      description: this.eventForm.value.description,
+      state: this.eventForm.value.state,
+      image: this.eventForm.value.image,
+      date: this.eventForm.value.date,
+    };
+  }
+
   submit() {
-    console.log(this.eventForm)
     if (this.eventForm.invalid) {
+
       return;
     }
 
-    this.router.navigate(['/home']);
+    const data = this.getEventData();
+    this.eventService.postData(data).subscribe({
+      next: (response) => {
+        this.router.navigate(['/home']);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error posting event', error);
+      }
+    });
   }
 
   goBack() {

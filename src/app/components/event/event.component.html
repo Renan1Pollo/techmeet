@@ -1,5 +1,5 @@
 <li class="py-8">
-  <img class="rounded-md mb-2 sm:mb-4" src="https://images.sympla.com.br/630305a3009a1-lg.png" />
+  <img class="rounded-md mb-2 sm:mb-4" src="{{ image }}" />
   <dl class="relative flex flex-wrap gap-x-3">
     <dt class="sr-only">Nome do Evento</dt>
     <dd class="w-full flex-none text-lg font-semibold tracking-tight text-gray-900">
@@ -14,6 +14,10 @@
       <div class="flex justify-between">
         <dt class="sr-only">Data do Evento</dt>
         <dd class="mt-4 text-base font-semibold leading-7 text-gray-900">{{ date }}</dd>
+        <dt class="sr-only">Estado do Evento</dt>
+        <dd class="ml-4 mt-4 flex items-center gap-x-3 text-base leading-7 text-gray-500">
+          {{ state }}
+        </dd>
         <dt class="sr-only">Local do Evento</dt>
         <dd class="ml-4 mt-4 flex items-center gap-x-3 text-base leading-7 text-gray-500">
           {{ place }}

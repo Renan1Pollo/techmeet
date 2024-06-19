@@ -8,9 +8,11 @@ import { Component, Input } from '@angular/core';
   styleUrl: './event.component.scss',
 })
 export class EventComponent {
-  @Input('title') title: string = 'Não conseguimos carregar';
-  @Input('description') description: string = 'descrição virá em breve! hehe';
-  @Input('date') date: string = '19/10/2024';
-  @Input('place') place: string = 'Online';
-  isUser: boolean = true
+  @Input('title') title!: string;
+  @Input('description') description!: string;
+  @Input('date') date!: string;
+  @Input('place') place!: string;
+  @Input('state') state!: string;
+  @Input('image') image!: string;
+  isUser: boolean = true;
 }
