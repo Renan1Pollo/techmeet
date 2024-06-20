@@ -74,7 +74,8 @@ export class RegisterEventComponent implements OnInit {
     }
 
     const data = this.getEventData();
-    this.eventService.postData(data).subscribe({
+
+    this.eventService.createEvent(data).subscribe({
       next: (response) => {
         this.router.navigate(['/home']);
       },

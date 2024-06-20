@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-event',
@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss',
 })
-export class EventComponent {
+export class EventComponent implements OnInit {
   @Input('title') title!: string;
   @Input('description') description!: string;
   @Input('date') date!: string;
@@ -15,4 +15,12 @@ export class EventComponent {
   @Input('state') state!: string;
   @Input('image') image!: string;
   isUser: boolean = true;
+
+  ngOnInit() {
+    const role = localStorage.getItem('role');
+
+    if (role != null) {
+      this.isUser = role.toUpperCase() === '"USER"';
+    }
+  }
 }

@@ -30,6 +30,7 @@ interface FilterForm {
 export class HomeComponent {
   filterForm!: FormGroup<FilterForm>;
   isModalOpen = signal(false);
+  isUser: boolean = true;
   states: { label: string; value: string }[] = [];
   events!: Event[];
 
@@ -59,6 +60,12 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
+    const role = localStorage.getItem('role');
+
+    if (role != null) {
+      this.isUser = role.toUpperCase() === '"USER"';
+    }
+
     this.getEventData();
   }
 
