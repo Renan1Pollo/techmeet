@@ -1,6 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+}  from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface RegisterForm {
   name: FormControl<string | null>;
@@ -12,14 +20,17 @@ interface RegisterForm {
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private service: UserService, private router: Router) {}
 
   ngOnInit() {
     this.registerForm = new FormGroup<RegisterForm>({
@@ -31,7 +42,40 @@ export class RegisterComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.registerForm);
-    this.router.navigate(['/home']);
+    if (this.registerForm.invalid) {
+      alert('Preencha todos os campos corretamente!')
+      return;
+    }
+
+    const data = this.getUserData();
+    this.service.register(data).subscribe({
+      next: (response: any) => {
+        const role = response.role;
+        const token = response.token;
+        console.log(role)
+        console.log(token)
+
+        // Armazenar no localStorage
+        localStorage.setItem('role', JSON.stringify(role));
+        localStorage.setItem('token', token);
+        this.router.navigate(['/home']);
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          alert('Usuário não encontrado');
+        } else {
+          console.error('Error posting event', error);
+        }
+      }
+    });
+  }
+
+  getUserData() {
+    return {
+      name: this.registerForm.value.name,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      role: 'USER',
+    };
   }
 }
