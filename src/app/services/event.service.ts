@@ -18,8 +18,8 @@ export class EventService {
     });
   }
 
-  deleteEvent(id: number): Observable<Event> {
-    return this.http.delete<Event>(`${env.apiEventsUrl}/${id}`, {
+  deleteEvent(name: string): Observable<Event> {
+    return this.http.delete<Event>(`${env.apiEventsUrl}/${name}`, {
       headers: this.getHeaders(),
     });
   }
@@ -35,5 +35,9 @@ export class EventService {
       Authorization: `Bearer ${token}`,
     };
     return new HttpHeaders(headersConfig);
+  }
+
+  public getRole() {
+    return localStorage.getItem('role');
   }
 }

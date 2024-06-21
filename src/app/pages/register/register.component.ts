@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 400) {
-          alert('Usuário não encontrado');
+          alert('Usuário ja cadastrado com esse e-mail');
         } else {
           console.error('Error posting event', error);
         }

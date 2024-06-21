@@ -43,11 +43,8 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         const role = response.role;
         const token = response.token;
-        console.log(role)
-        console.log(token)
 
-        // Armazenar no localStorage
-        localStorage.setItem('role', JSON.stringify(role));
+        localStorage.setItem('role', role);
         localStorage.setItem('token', token);
         this.router.navigate(['/home']);
       },

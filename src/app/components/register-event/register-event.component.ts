@@ -69,7 +69,6 @@ export class RegisterEventComponent implements OnInit {
 
   submit() {
     if (this.eventForm.invalid) {
-
       return;
     }
 

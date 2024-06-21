@@ -42,7 +42,7 @@
         class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <ul *ngFor="let event of events;" class="-my-8 divide-y divide-gray-100">
           <app-event [title]="event.name" [description]="event.description" [date]="event.date"
-            [place]="event.state" [image]="event.image" >{{ event }}</app-event>
+            [place]="event.state" [image]="event.image" [isUser]="isUser" >{{ event }}</app-event>
         </ul>
       </div>
     </div>

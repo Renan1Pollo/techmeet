@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { EventComponent } from '../../components/event/event.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -23,18 +23,22 @@ interface FilterForm {
     CommonModule,
     ReactiveFormsModule,
     ModalComponent,
+    RouterModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   filterForm!: FormGroup<FilterForm>;
   isModalOpen = signal(false);
   isUser: boolean = true;
   states: { label: string; value: string }[] = [];
   events!: Event[];
 
-  constructor(private service: EventService, private router: Router, private filterService: FilterService) {
+  constructor(private service: EventService,
+    private router: Router,
+    private filterService: FilterService) {
+
     this.filterForm = new FormGroup({
       locale: new FormControl(''),
       from: new FormControl(null),
@@ -60,11 +64,8 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    const role = localStorage.getItem('role');
-
-    if (role != null) {
-      this.isUser = role.toUpperCase() === '"USER"';
-    }
+      var role = this.service.getRole();
+      this.isUser = role === 'USER';
 
     this.getEventData();
   }

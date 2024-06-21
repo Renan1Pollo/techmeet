@@ -1,4 +1,7 @@
+import { Router } from '@angular/router';
+import { EventService } from './../../services/event.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event',
@@ -7,20 +10,32 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss',
 })
-export class EventComponent implements OnInit {
+export class EventComponent {
   @Input('title') title!: string;
   @Input('description') description!: string;
   @Input('date') date!: string;
   @Input('place') place!: string;
   @Input('state') state!: string;
   @Input('image') image!: string;
-  isUser: boolean = true;
+  @Input() isUser!: boolean;
 
-  ngOnInit() {
-    const role = localStorage.getItem('role');
+  constructor(private eventService: EventService, private router: Router,private location: Location) { }
 
-    if (role != null) {
-      this.isUser = role.toUpperCase() === '"USER"';
+  submit() {
+    if (this.isUser) {
+      alert('Presença Confirmada com sucesso!');
+      return;
+    }
+
+    const isDelete = confirm('Tem certeza que deseja excluir esse evento?');
+    if (isDelete) {
+      this.eventService.deleteEvent(this.title).subscribe(() => {
+        alert('Evento excluído com sucesso!');
+        this.router.navigate(['/home']);
+        location.reload();
+      }, error => {
+        alert('Ocorreu um erro ao excluir o evento.');
+      });
     }
   }
 }
