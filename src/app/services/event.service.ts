@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { env } from '../../environment/environment';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Event } from '../types/Event.type';
 
 
@@ -9,6 +9,19 @@ import { Event } from '../types/Event.type';
   providedIn: 'root',
 })
 export class EventService {
+
+  sendEmail(email: string) {
+    return this.http.post<any>(env.apiSendEmailUrl, {
+      toEmail: email,
+      subject: "Presença Confirmada!",
+      body: "Presença confirmada com sucesso"
+    }).pipe(
+      catchError(error => {
+        console.error('Error occurred:', error);
+        return throwError(error);
+      })
+    );
+  }
 
   constructor(private http: HttpClient) {}
 

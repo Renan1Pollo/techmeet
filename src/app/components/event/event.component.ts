@@ -19,11 +19,26 @@ export class EventComponent {
   @Input('image') image!: string;
   @Input() isUser!: boolean;
 
-  constructor(private eventService: EventService, private router: Router,private location: Location) { }
+  constructor(private eventService: EventService, private router: Router, private location: Location) { }
 
   submit() {
+
+    const email = localStorage.getItem("email");
+
     if (this.isUser) {
-      alert('Presença Confirmada com sucesso!');
+
+      if (email === null) {
+        alert('Email não encontrado.');
+        return;
+      }
+
+      this.eventService.sendEmail(email).subscribe(() => {
+        alert('Presença Confirmada com sucesso!');
+        this.router.navigate(['/home']);
+        location.reload();
+      }, error => {
+        alert('Presença Confirmada com sucesso!');
+      });
       return;
     }
 

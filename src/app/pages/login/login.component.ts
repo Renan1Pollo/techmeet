@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
         const role = response.role;
         const token = response.token;
 
+        localStorage.setItem('email', data.email);
         localStorage.setItem('role', role);
         localStorage.setItem('token', token);
         this.router.navigate(['/home']);
